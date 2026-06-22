@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 HELP.md
 .gradle
 build/
@@ -36,7 +36,7 @@ out/
 
 ### VS Code ###
 .vscode/
-=======
+
 .gradle
 **/build/
 !**/src/**/build/
@@ -58,4 +58,5 @@ gradle-app.setting
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
->>>>>>> 29d6f44b569790df13b7422e5b1eb76250345f20
+
+*.log
