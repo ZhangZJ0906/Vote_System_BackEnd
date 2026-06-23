@@ -158,6 +158,53 @@ BEGIN
     SET p_result = 'OK';
 END$$
 
+
+-- ==============================
+-- 6. 使用者註冊 
+-- ==============================
+CREATE PROCEDURE sp_register_user(
+    IN  p_email      VARCHAR(100),
+    IN  p_password   VARCHAR(255), 
+    IN  p_username   VARCHAR(50),
+    OUT p_result     VARCHAR(50)   
+)
+BEGIN
+    -- 檢查 Email 是否重複
+    IF EXISTS (SELECT 1 FROM users WHERE email = p_email) THEN
+        SET p_result = 'EMAIL_EXISTS';
+    ELSE
+        INSERT INTO users (email, password, username)
+        VALUES (p_email, p_password, p_username);
+        SET p_result = 'SUCCESS';
+    END IF;
+END$$
+
+-- ==============================
+-- 7. 使用者登入 
+-- ==============================
+CREATE PROCEDURE sp_login_user(
+    IN p_email    VARCHAR(100),
+    IN p_password VARCHAR(255)  
+)
+BEGIN
+    SELECT id, role , email, username
+    FROM users
+    WHERE email = p_email;
+    
+END$$
+
+-- ==============================
+-- 8. email check
+-- ==============================
+CREATE PROCEDURE sp_check_user_email(
+    IN p_email    VARCHAR(100), 
+)
+BEGIN
+    SELECT count(email)
+    FROM users
+    WHERE email = p_email;
+    
+END$$
 DELIMITER ;
 
 -- ==============================
