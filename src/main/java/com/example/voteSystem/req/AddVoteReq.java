@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 public class AddVoteReq {
 	@NotBlank(message = "標題不可為空")
 	private String title;
-	@NotBlank(message = "描述不可為空")
+
 	private String description;
 	@NotEmpty(message = "選項不可為空")
 	private List<String> itemNames;

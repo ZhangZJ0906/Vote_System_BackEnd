@@ -21,20 +21,26 @@ public class UserServices {
 	// 密碼Hash
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+
 	@Transactional
 	public LoginUserRes login(LoginReq req) {
-		String email = req.getEmail();
-		String rawPassword = req.getPassword();
-		Optional<User> userOpt = userDao.loginUserWithSp(email, "");
+		try {
+			String email = req.getEmail();
+			String rawPassword = req.getPassword();
+			Optional<User> userOpt = userDao.loginUserWithSp(email, "");
 
-		if (userOpt.isEmpty()) {
+			if (userOpt.isEmpty()) {
+				return new LoginUserRes("帳號或密碼錯誤", 400);
+			}
+			User user = userOpt.get();
+			if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+				return new LoginUserRes("帳號或密碼錯誤", 400);
+			}
+			return new LoginUserRes("成功登入", 200, user.getId(), user.getUsername(), user.getRole(), user.getEmail());
+		} catch (Exception e) {
 			return new LoginUserRes("帳號或密碼錯誤", 400);
 		}
-		User user = userOpt.get();
-		if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
-			return new LoginUserRes("帳號或密碼錯誤", 400);
-		}
-		return new LoginUserRes("成功登入", 200, user.getId(), user.getUsername(), user.getRole(), user.getEmail());
+
 	}
 
 	@Transactional

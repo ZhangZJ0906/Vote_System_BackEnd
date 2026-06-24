@@ -104,7 +104,6 @@ public class VoteService {
 		if (userId == null) {
 			return new GetAllVotesRes<>("使用者ID 為空", 400);
 		}
-		System.out.println(userId);
 
 		List<Map<String, Object>> rawList = voteDao.getUserVoteHistory(userId);
 		System.out.println("rawList size: " + rawList.size());
@@ -131,7 +130,6 @@ public class VoteService {
 					return new VoteHistoryQuestionDTO(entry.getKey(), (String) first.get("question_title"), items);
 				}).collect(Collectors.toList());
 
-		System.out.println("result" + result);
 		return new GetAllVotesRes<>("查詢成功", 200, result);
 	}
 }
