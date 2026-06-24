@@ -1,20 +1,19 @@
 package com.example.voteSystem.res;
 
 import java.util.List;
-import java.util.Map;
 
-public class GetAllVotesRes extends BasicRes {
-	private List<Map<String, Object>> list;
+public class GetAllVotesRes<T> extends BasicRes {
+	private List<T> list;
 
-	public List<Map<String, Object>> getList() {
+	public List<T> getList() {
 		return list;
 	}
 
-	public void setList(List<Map<String, Object>> list) {
+	public void setList(List<T> list) {
 		this.list = list;
 	}
 
-	public GetAllVotesRes(String message, int code, List<Map<String, Object>> list) {
+	public GetAllVotesRes(String message, int code, List<T> list) {
 		super(message, code);
 		this.list = list;
 	}

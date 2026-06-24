@@ -24,24 +24,20 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
-				// 1. 💡 啟用 CORS 設定
+
 				.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
-				// 必須關閉 CSRF 功能
 				.csrf(csrf -> csrf.disable())
 
-				// 設定權限規則
 				.authorizeHttpRequests(auth -> auth
-						// 💡 確保 OPTIONS 請求完全放行（這步非常關鍵！）
+
 						.requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
-						.requestMatchers("/api/user/**").permitAll()
-						// 放行投票相關端點（或者你可以依需求設定成需登入，目前先全放行測試）
-						.requestMatchers("/api/vote/**").permitAll().anyRequest().authenticated());
+						.requestMatchers("/api/user/**").permitAll().requestMatchers("/api/vote/**").permitAll()
+						.anyRequest().authenticated());
 
 		return http.build();
 	}
 
-	// 2. 💡 定義 CORS 的具體規則
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();

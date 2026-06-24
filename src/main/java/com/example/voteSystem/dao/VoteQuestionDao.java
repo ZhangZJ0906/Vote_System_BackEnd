@@ -30,6 +30,6 @@ public interface VoteQuestionDao extends JpaRepository<VoteQuestions, Integer> {
 	@Procedure(procedureName = "sp_cast_vote_batch")
 	void castVoteBatch(@Param("p_item_id") String itemId, @Param("p_user_id") Integer userId);
 
-	@Procedure(procedureName = "sp_get_user_vote_history")
+	@Query(value = "CALL sp_get_user_vote_history(:p_user_id)", nativeQuery = true)
 	List<Map<String, Object>> getUserVoteHistory(@Param("p_user_id") Integer userId);
 }

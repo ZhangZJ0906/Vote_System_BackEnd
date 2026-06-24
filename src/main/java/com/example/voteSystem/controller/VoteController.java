@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.voteSystem.dto.AddCastVoteDTO;
+import com.example.voteSystem.dto.VoteHistoryQuestionDTO;
+import com.example.voteSystem.dto.VoteQuestionsDto;
 import com.example.voteSystem.req.AddVoteReq;
 import com.example.voteSystem.res.BasicRes;
 import com.example.voteSystem.res.GetAllVotesRes;
@@ -41,7 +43,7 @@ public class VoteController {
 
 // 獲取所有投票列表及累積票數
 	@GetMapping("/list")
-	public GetAllVotesRes getAllVotes() {
+	public GetAllVotesRes<VoteQuestionsDto> getAllVotes() {
 		return voteService.getAllVotes();
 	}
 
@@ -54,7 +56,7 @@ public class VoteController {
 
 	// 查看歷史投票
 	@GetMapping("/history")
-	public GetAllVotesRes getUserVoteHistory(@RequestParam("userId") Integer userId) {
+	public GetAllVotesRes<VoteHistoryQuestionDTO> getUserVoteHistory(@RequestParam("userId") Integer userId) {
 		return voteService.getUserVoteHistory(userId);
 	}
 
